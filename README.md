@@ -1,5 +1,5 @@
 `Spring`：`SpringBoot`
 `DB`：`MySQL`
-`AMQP：`RabbitMQ`
+`AMQP`：`RabbitMQ`
 `ORM`：`MyBatis`
 `Monitor`：`Druid`
