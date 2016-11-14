@@ -1,7 +1,7 @@
 package com.songjiuhua.bootmain.mvc.service;
 
 import com.songjiuhua.bootmain.mvc.model.TrainNews;
-import com.songjiuhua.bootmain.utils.BaseService;
+import com.songjiuhua.bootmain.base.BaseService;
 import org.springframework.stereotype.Service;
 
 /**

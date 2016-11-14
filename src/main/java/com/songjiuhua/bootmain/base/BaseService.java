@@ -1,4 +1,4 @@
-package com.songjiuhua.bootmain.utils;
+package com.songjiuhua.bootmain.base;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
