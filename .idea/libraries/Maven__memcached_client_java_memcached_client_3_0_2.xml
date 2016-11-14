@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: memcached_client:java_memcached_client:3.0.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/memcached_client/java_memcached_client/3.0.2/java_memcached_client-3.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/memcached_client/java_memcached_client/3.0.2/java_memcached_client-3.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/memcached_client/java_memcached_client/3.0.2/java_memcached_client-3.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

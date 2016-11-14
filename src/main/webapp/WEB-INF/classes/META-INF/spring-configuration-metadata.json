@@ -1,0 +1,72 @@
+{
+  "groups": [
+    {
+      "name": "memcached",
+      "type": "com.songjiuhua.bootmain.properties.MemCachedProperties",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "solr",
+      "type": "com.songjiuhua.bootmain.properties.SolrProperties",
+      "sourceType": "com.songjiuhua.bootmain.properties.SolrProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "memcached.failover",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "memcached.init-conn",
+      "type": "java.lang.Integer",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "memcached.maint-sleep",
+      "type": "java.lang.Integer",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "memcached.max-conn",
+      "type": "java.lang.Integer",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "memcached.min-conn",
+      "type": "java.lang.Integer",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "memcached.nagle",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "memcached.services",
+      "type": "java.lang.String[]",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "memcached.socket-t-o",
+      "type": "java.lang.Integer",
+      "sourceType": "com.songjiuhua.bootmain.properties.MemCachedProperties"
+    },
+    {
+      "name": "solr.connection-timeout",
+      "type": "java.lang.String",
+      "sourceType": "com.songjiuhua.bootmain.properties.SolrProperties"
+    },
+    {
+      "name": "solr.max-retries",
+      "type": "java.lang.String",
+      "sourceType": "com.songjiuhua.bootmain.properties.SolrProperties"
+    },
+    {
+      "name": "solr.url",
+      "type": "java.lang.String",
+      "sourceType": "com.songjiuhua.bootmain.properties.SolrProperties"
+    }
+  ],
+  "hints": []
+}

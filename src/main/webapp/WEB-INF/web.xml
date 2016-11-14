@@ -1,0 +1,28 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!--<security-constraint>
+      <web-resource-collection>
+          <http-method>GET</http-method>
+          <web-resource-name>tomcat protect page</web-resource-name>
+          <url-pattern>/protect/*</url-pattern>
+          <description>none</description>
+      </web-resource-collection>
+      <auth-constraint>
+          &lt;!&ndash; 这里的member要与tomcat-user.xml中配置的role一致 &ndash;&gt;
+          <role-name>songjiuhua</role-name>
+      </auth-constraint>
+  </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        &lt;!&ndash; 使用的Realm名字，注意这里不能有空格 &ndash;&gt;
+        <realm-name>MyConstraints</realm-name>
+    </login-config>-->
+
+
+</web-app>
