@@ -1,5 +1,7 @@
 package com.kindergarten.bootmain.base;
 
+import com.kindergarten.business.model.SysUser;
+import com.kindergarten.common.BaseQueryDto;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +63,7 @@ public class BaseService<T> {
      * @param params
      * @return
      */
-    public Object selectList(String statementId, Object params){
+    public Object selectList(String statementId, BaseQueryDto<T> params){
         return sqlSessionTemplate.selectList(statementId, params);
     }
 

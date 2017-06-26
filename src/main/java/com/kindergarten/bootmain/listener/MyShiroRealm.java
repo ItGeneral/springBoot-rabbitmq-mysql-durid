@@ -1,7 +1,7 @@
 package com.kindergarten.bootmain.listener;
 
 import com.kindergarten.business.model.SysUser;
-import com.kindergarten.business.service.UserService;
+import com.kindergarten.business.service.SysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -28,7 +28,7 @@ import java.util.Set;
 public class MyShiroRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserService userService;
+    private SysUserService sysUserService;
 
     /**
      * 权限认证，为当前登录的Subject授予角色和权限
@@ -43,7 +43,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         //获取当前登录用户名
         String loginName = (String) super.getAvailablePrincipal(principalCollection);
         // 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
-        SysUser sysUser = userService.getByUserName(loginName);
+        SysUser sysUser = sysUserService.getByUserName(loginName);
         //把principals放session中 key=userId value=principals
         SecurityUtils.getSubject().getSession().setAttribute(sysUser.getUserName(),SecurityUtils.getSubject().getPrincipals());
         if (sysUser != null){
@@ -72,7 +72,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         //查询数据库中是否有此用户
-        SysUser sysUser = userService.getByUserName(token.getUsername());
+        SysUser sysUser = sysUserService.getByUserName(token.getUsername());
         if(sysUser !=null){
             // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
             //设置用户session

@@ -16,6 +16,7 @@ CREATE TABLE sys_user(
   INDEX sys_user_name_index(user_name)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE='utf8_general_ci' COMMENT='用户信息表';
 
+DROP TABLE IF EXISTS sys_role;
 CREATE TABLE sys_role (
   id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
   role_cn_name VARCHAR(128) NOT NULL  COMMENT '角色中文名称',
@@ -23,9 +24,9 @@ CREATE TABLE sys_role (
   role_type INT(4) NOT NULL DEFAULT '1' COMMENT '角色类型(1:业务角色;2:管理角色 ;3:系统内置角色)',
   is_active TINYINT(1) NOT NULL DEFAULT '1' COMMENT '是否有效 1：有效 0：无效',
   remark VARCHAR(1024) NULL DEFAULT NULL COMMENT '备注',
-  create_by BIGINT(20) NULL DEFAULT NULL COMMENT '创建人',
+  creator BIGINT(20) NULL DEFAULT NULL COMMENT '创建人',
   create_time TIMESTAMP NULL DEFAULT NULL COMMENT '创建时间',
-  update_by BIGINT(20) NULL DEFAULT NULL COMMENT '更新人',
+  updater BIGINT(20) NULL DEFAULT NULL COMMENT '更新人',
   update_time TIMESTAMP NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (id),
   UNIQUE KEY sys_role_en_name(role_en_name),

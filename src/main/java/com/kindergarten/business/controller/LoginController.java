@@ -2,7 +2,7 @@ package com.kindergarten.business.controller;
 
 import com.kindergarten.bootmain.base.BaseController;
 import com.kindergarten.business.model.SysUser;
-import com.kindergarten.business.service.UserService;
+import com.kindergarten.business.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController extends BaseController{
 
     @Autowired
-    private UserService userService;
+    private SysUserService sysUserService;
 
     /**
      * 登录
@@ -82,7 +82,7 @@ public class LoginController extends BaseController{
             return badRequest(HttpStatus.BAD_REQUEST).put("message", "密码不能为空").build();
         }
         try{
-            userService.insertUser(sysUser);
+            sysUserService.insertUser(sysUser);
         }catch (Exception e){
             return badRequest(HttpStatus.BAD_REQUEST).put("message", "程序异常，请稍后再试").build();
         }

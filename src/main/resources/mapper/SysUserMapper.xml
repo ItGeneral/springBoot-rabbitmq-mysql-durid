@@ -45,6 +45,11 @@
     </select>
 
     <select id="queryAllUser" resultMap="resultMap">
-        SELECT <include refid="columns"/> FROM sys_user WHERE status = 1
+        <include refid="MYSQL.paginationStart" />
+        SELECT <include refid="columns"/>
+        FROM sys_user
+        WHERE status = 1
+        ORDER BY create_time DESC
+        <include refid="MYSQL.paginationEnd" />
     </select>
 </mapper>

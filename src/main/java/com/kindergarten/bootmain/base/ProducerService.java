@@ -1,4 +1,4 @@
-package com.kindergarten.business.service;
+package com.kindergarten.bootmain.base;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

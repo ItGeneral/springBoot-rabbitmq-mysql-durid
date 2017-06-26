@@ -2,6 +2,7 @@ package com.kindergarten.business.service;
 
 import com.kindergarten.bootmain.base.BaseService;
 import com.kindergarten.business.model.SysUser;
+import com.kindergarten.common.BaseQueryDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,9 @@ import java.util.List;
  * @description
  */
 @Service
-public class UserService extends BaseService<SysUser> {
+public class SysUserService extends BaseService<SysUser> {
 
-    private final static Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final static Logger logger = LoggerFactory.getLogger(SysUserService.class);
 
     /**
      *  根据用户名查询用户
@@ -41,7 +42,8 @@ public class UserService extends BaseService<SysUser> {
     public List<SysUser> queryAllUser(){
         List<SysUser> sysUserList = new ArrayList<>();
         try{
-            sysUserList = (List<SysUser>) selectList("queryAllUser", null);
+            BaseQueryDto<SysUser> baseQueryDto = new BaseQueryDto<>(new SysUser());
+            sysUserList = (List<SysUser>) selectList("queryAllUser", baseQueryDto);
         }catch (Exception e){
             logger.error("查询所有用户信息异常", e);
         }
@@ -56,7 +58,7 @@ public class UserService extends BaseService<SysUser> {
         try{
             insert("insert", sysUser);
         }catch (Exception e){
-            logger.error("查询所有用户信息异常", e);
+            logger.error("用户信息入库异常", e);
         }
     }
 
