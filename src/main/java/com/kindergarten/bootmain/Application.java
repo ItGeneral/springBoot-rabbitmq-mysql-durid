@@ -1,10 +1,10 @@
-package com.songjiuhua.bootmain;
+package com.kindergarten.bootmain;
 
-import com.songjiuhua.example.memcached.MemCached;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -13,16 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @description
  */
 @RestController
-@SpringBootApplication
+@ComponentScan(value = "com.kindergarten")
+@Configuration
+@EnableAutoConfiguration
 public class Application extends SpringBootServletInitializer {
-
-
-    @RequestMapping("/test")
-    public String test(){
-        MemCached memCached = new MemCached();
-        memCached.testMemCached();
-        return MemCached.client.get("key").toString();
-    }
 
     public static void main(String[] args){
         SpringApplication.run(Application.class ,args);

@@ -1,6 +1,6 @@
-package com.songjiuhua.bootmain.config;
+package com.kindergarten.bootmain.config;
 
-import com.songjiuhua.bootmain.interceptor.MyInterceptor;
+import com.kindergarten.bootmain.interceptor.MyInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -19,7 +19,7 @@ public class MyInterceptorConfigurer extends WebMvcConfigurerAdapter{
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/test/**");
+        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/*");
         super.addInterceptors(registry);
     }
 

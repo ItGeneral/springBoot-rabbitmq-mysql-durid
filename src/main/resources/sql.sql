@@ -1,19 +1,20 @@
+DROP TABLE if EXISTS sys_user;
 CREATE TABLE sys_user(
   id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '用户id',
   user_name VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '用户名',
   password VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '密码',
   tel_phone VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '联系方式',
-  realname VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '姓名',
+  real_name VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '姓名',
   email_address VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '邮箱地址',
-  age INT DEFAULT NULL COMMENT '年龄',
+  age BIGINT DEFAULT NULL COMMENT '年龄',
   graduated_school VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '毕业院校',
   create_time TIMESTAMP NULL DEFAULT NULL COMMENT '创建时间(注册时间)',
   update_time TIMESTAMP NULL DEFAULT NULL COMMENT '更新时间',
+  status BIGINT DEFAULT '1' COMMENT '用户状态 1：在职，2：离职',
   PRIMARY KEY (id),
   UNIQUE KEY sys_user_name(user_name),
   INDEX sys_user_name_index(user_name)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE='utf8_general_ci' COMMENT='用户信息表';
-
 
 CREATE TABLE sys_role (
   id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '角色编号',

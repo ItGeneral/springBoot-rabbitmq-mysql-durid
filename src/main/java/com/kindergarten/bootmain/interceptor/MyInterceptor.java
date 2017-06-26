@@ -1,4 +1,4 @@
-package com.songjiuhua.bootmain.interceptor;
+package com.kindergarten.bootmain.interceptor;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -15,7 +15,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 
 
     /**
-     * 拦截器预处理
+     * 拦截器预处理 登录拦截、性能监控，只有返回true时，才会执行下面的postHandle方法
      * @param request
      * @param response
      * @param handler
@@ -24,8 +24,11 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //登录拦截、性能监控，只有返回true时，才会执行下面的postHandle方法
-        System.out.println("--------preHandle--------");
+        //设置允许跨域请求
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS,DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type");
         return true;
     }
 
@@ -40,7 +43,6 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println("--------postHandle--------");
     }
 
     /**
@@ -53,7 +55,6 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        System.out.println("--------afterCompletion--------");
     }
 
 }

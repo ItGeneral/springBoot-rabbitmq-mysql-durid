@@ -1,7 +1,7 @@
-package com.songjiuhua.bootmain.listener;
+package com.kindergarten.bootmain.listener;
 
-import com.songjiuhua.bootmain.mvc.model.User;
-import com.songjiuhua.bootmain.mvc.service.UserService;
+import com.kindergarten.business.model.SysUser;
+import com.kindergarten.business.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -43,10 +43,10 @@ public class MyShiroRealm extends AuthorizingRealm {
         //获取当前登录用户名
         String loginName = (String) super.getAvailablePrincipal(principalCollection);
         // 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
-        User user = userService.getByUserName(loginName);
+        SysUser sysUser = userService.getByUserName(loginName);
         //把principals放session中 key=userId value=principals
-        SecurityUtils.getSubject().getSession().setAttribute(user.getUserName(),SecurityUtils.getSubject().getPrincipals());
-        if (user != null){
+        SecurityUtils.getSubject().getSession().setAttribute(sysUser.getUserName(),SecurityUtils.getSubject().getPrincipals());
+        if (sysUser != null){
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
             SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
             //查询当前用户的角色
@@ -72,13 +72,13 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         //查询数据库中是否有此用户
-        User user = userService.getByUserName(token.getUsername());
-        if(user!=null){
+        SysUser sysUser = userService.getByUserName(token.getUsername());
+        if(sysUser !=null){
             // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
             //设置用户session
             Session session = SecurityUtils.getSubject().getSession();
-            session.setAttribute("user", user);
-            return new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), getName());
+            session.setAttribute("sysUser", sysUser);
+            return new SimpleAuthenticationInfo(sysUser.getUserName(), sysUser.getPassword(), getName());
         }
         return null;
     }

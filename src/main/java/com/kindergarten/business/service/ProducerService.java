@@ -1,4 +1,4 @@
-package com.songjiuhua.bootmain.mvc.service;
+package com.kindergarten.business.service;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

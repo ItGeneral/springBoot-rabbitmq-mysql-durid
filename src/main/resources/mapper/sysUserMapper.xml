@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kindergarten.bootmain.mvc.model.SysUser">
+<mapper namespace="com.kindergarten.business.model.SysUser">
 
-    <resultMap id="resultMap" type="com.kindergarten.bootmain.mvc.model.SysUser">
+    <resultMap id="resultMap" type="com.kindergarten.business.model.SysUser">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="tel_phone" property="telPhone" jdbcType="VARCHAR"/>
-        <result column="realname" property="realName" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
         <result column="email_address" property="emailAddress" jdbcType="VARCHAR"/>
         <result column="age" property="age" jdbcType="BIGINT"/>
         <result column="graduated_school" property="graduatedSchool" jdbcType="VARCHAR"/>
@@ -16,10 +16,10 @@
     </resultMap>
 
     <sql id="columns">
-        id, user_name, password, tel_phone, realname, email_address, age, graduated_school, create_time, update_time
+        id, user_name, password, tel_phone, real_name, email_address, age, graduated_school, create_time, update_time
     </sql>
 
-    <insert id="insert" parameterType="com.kindergarten.bootmain.mvc.model.SysUser">
+    <insert id="insert" parameterType="com.kindergarten.business.model.SysUser">
         INSERT INTO sys_user
         (<include refid="columns"/>)
         VALUES
@@ -38,11 +38,11 @@
     </insert>
 
     <!--根据id查询用户详情-->
-    <select id="queryByUserName" parameterType="java.lang.String" resultType="com.kindergarten.bootmain.mvc.model.SysUser">
+    <select id="queryByUserName" parameterType="java.lang.String" resultType="com.kindergarten.business.model.SysUser">
         SELECT <include refid="columns"/> FROM sys_user WHERE user_name =  #{userName, jdbcType=VARCHAR} AND status = 1
     </select>
 
-    <select id="queryAllUser" resultType="com.kindergarten.bootmain.mvc.model.SysUser">
+    <select id="queryAllUser" resultType="com.kindergarten.business.model.SysUser">
         SELECT <include refid="columns"/> FROM sys_user WHERE status = 1
     </select>
 </mapper>

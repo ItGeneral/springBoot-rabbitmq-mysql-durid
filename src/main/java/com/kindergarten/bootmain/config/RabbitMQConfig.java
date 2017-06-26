@@ -1,6 +1,6 @@
-package com.songjiuhua.bootmain.config;
+package com.kindergarten.bootmain.config;
 
-import com.songjiuhua.bootmain.listener.ConsumerListener;
+import com.kindergarten.bootmain.listener.ConsumerListener;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

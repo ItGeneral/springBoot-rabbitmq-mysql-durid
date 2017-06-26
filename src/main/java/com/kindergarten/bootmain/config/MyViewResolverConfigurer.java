@@ -1,4 +1,4 @@
-package com.songjiuhua.bootmain.config;
+package com.kindergarten.bootmain.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

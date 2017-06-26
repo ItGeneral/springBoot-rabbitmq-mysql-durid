@@ -1,4 +1,4 @@
-package com.songjiuhua.bootmain.config;
+package com.kindergarten.bootmain.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

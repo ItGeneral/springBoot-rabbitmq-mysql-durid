@@ -1,6 +1,6 @@
-package com.songjiuhua.bootmain.config;
+package com.kindergarten.bootmain.config;
 
-import com.songjiuhua.bootmain.listener.MyShiroRealm;
+import com.kindergarten.bootmain.listener.MyShiroRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -102,14 +102,13 @@ public class ShiroConfig {
 
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
         filterChainDefinitionManager.put("/logout", "logout");
-        filterChainDefinitionManager.put("/user/**", "authc,roles[ROLE_USER]");//用户为ROLE_USER 角色可以访问。由用户角色控制用户行为。
+        //用户为ROLE_USER 角色可以访问。由用户角色控制用户行为。
+        filterChainDefinitionManager.put("/user/**", "authc,roles[ROLE_USER]");
         filterChainDefinitionManager.put("/events/**", "authc,roles[ROLE_ADMIN]");
-        //        filterChainDefinitionManager.put("/user/edit/**", "authc,perms[user:edit]");// 这里为了测试，固定写死的值，也可以从数据库或其他配置中读取，此处是用权限控制
-
+        // 这里为了测试，固定写死的值，也可以从数据库或其他配置中读取，此处是用权限控制
+        //filterChainDefinitionManager.put("/user/edit/**", "authc,perms[user:edit]");
         filterChainDefinitionManager.put("/**", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
-
-
         shiroFilterFactoryBean.setSuccessUrl("/");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         return shiroFilterFactoryBean;
