@@ -41,11 +41,11 @@ public class LoginController extends BaseController{
     @RequestMapping(value = "login")
     public ResponseEntity login(@RequestParam String userName, @RequestParam String password,
            @RequestParam(defaultValue = "false") boolean rememberMe){
-        Subject subject = SecurityUtils.getSubject();
+        Subject currentUser  = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
         token.setRememberMe(rememberMe);
         try{
-            subject.login(token);
+            currentUser.login(token);
         }catch (UnknownAccountException uae){
             return badRequest(HttpStatus.BAD_REQUEST).put("message", "用户名不存在").build();
         }catch (IncorrectCredentialsException ice){

@@ -24,7 +24,7 @@ public class SysUser implements Serializable{
     /** 年龄 */
     private Integer age;
     /** 毕业院校 */
-    private String graduateSchool;
+    private String graduatedSchool;
     /** 状态 1：在职 2：离职 */
     private Integer status;
     /** 创建时间 */
@@ -88,12 +88,12 @@ public class SysUser implements Serializable{
         this.age = age;
     }
 
-    public String getGraduateSchool() {
-        return graduateSchool;
+    public String getGraduatedSchool() {
+        return graduatedSchool;
     }
 
-    public void setGraduateSchool(String graduateSchool) {
-        this.graduateSchool = graduateSchool;
+    public void setGraduatedSchool(String graduatedSchool) {
+        this.graduatedSchool = graduatedSchool;
     }
 
     public Date getCreateTime() {

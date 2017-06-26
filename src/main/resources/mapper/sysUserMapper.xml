@@ -11,12 +11,13 @@
         <result column="email_address" property="emailAddress" jdbcType="VARCHAR"/>
         <result column="age" property="age" jdbcType="BIGINT"/>
         <result column="graduated_school" property="graduatedSchool" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="BIGINT"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="columns">
-        id, user_name, password, tel_phone, real_name, email_address, age, graduated_school, create_time, update_time
+        id, user_name, password, tel_phone, real_name, email_address, age, graduated_school, status, create_time, update_time
     </sql>
 
     <insert id="insert" parameterType="com.kindergarten.business.model.SysUser">
@@ -32,17 +33,18 @@
             #{emailAddress, jdbcType=VARCHAR},
             #{age, jdbcType=BIGINT},
             #{graduatedSchool, jdbcType=VARCHAR},
+            #{status, jdbcType=BIGINT}
             now(),
             now(),
         )
     </insert>
 
     <!--根据id查询用户详情-->
-    <select id="queryByUserName" parameterType="java.lang.String" resultType="com.kindergarten.business.model.SysUser">
+    <select id="queryByUserName" parameterType="java.lang.String" resultMap="resultMap">
         SELECT <include refid="columns"/> FROM sys_user WHERE user_name =  #{userName, jdbcType=VARCHAR} AND status = 1
     </select>
 
-    <select id="queryAllUser" resultType="com.kindergarten.business.model.SysUser">
+    <select id="queryAllUser" resultMap="resultMap">
         SELECT <include refid="columns"/> FROM sys_user WHERE status = 1
     </select>
 </mapper>
