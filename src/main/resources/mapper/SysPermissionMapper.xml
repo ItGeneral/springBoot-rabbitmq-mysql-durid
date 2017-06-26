@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kindergarten.business.model.SysPermission">
+
+    <resultMap id="resultMap" type="com.kindergarten.business.model.SysPermission">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="permission_cn_name" property="permissionCnName" jdbcType="VARCHAR"/>
+        <result column="permission_en_name" property="permissionEnName" jdbcType="VARCHAR"/>
+        <result column="is_active" property="isActive" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="columns">
+        id, permission_cn_name, permission_en_name, is_active, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.kindergarten.business.model.SysPermission">
+        INSERT INTO sys_permission
+        (<include refid="columns"/>)
+        VALUES
+        (
+            #{id, jdbcType=BIGINT},
+            #{permissionCnName, jdbcType=VARCHAR},
+            #{permissionEnName, jdbcType=VARCHAR},
+            #{roleType, jdbcType=BIGINT},
+            #{isActive, jdbcType=VARCHAR},
+            now(),
+            now(),
+        )
+    </insert>
+
+    <!--根据id查询用户详情-->
+    <select id="queryByPermissionEnName" parameterType="java.lang.String" resultMap="resultMap">
+        SELECT <include refid="columns"/> FROM sys_permission WHERE permission_en_name =  #{permissionEnName, jdbcType=VARCHAR} ORDER BY create_time desc
+    </select>
+
+    <select id="queryAllPermissions" resultMap="resultMap">
+        <include refid="MYSQL.paginationStart" />
+        SELECT <include refid="columns"/> FROM sys_permission
+        ORDER BY create_time desc
+        <include refid="MYSQL.paginationEnd" />
+    </select>
+</mapper>

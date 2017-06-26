@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kindergarten.business.model.SysRole">
+
+    <resultMap id="resultMap" type="com.kindergarten.business.model.SysRole">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="role_cn_name" property="roleCnName" jdbcType="VARCHAR"/>
+        <result column="role_en_name" property="roleEnName" jdbcType="VARCHAR"/>
+        <result column="role_type" property="roleType" jdbcType="BIGINT"/>
+        <result column="is_active" property="isActive" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updater" property="updater" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="columns">
+        id, role_cn_name, role_en_name, role_type, is_active, remark, creator, updater, status, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.kindergarten.business.model.SysUser">
+        INSERT INTO sys_role
+        (<include refid="columns"/>)
+        VALUES
+        (
+            #{id, jdbcType=BIGINT},
+            #{roleCnName, jdbcType=VARCHAR},
+            #{roleEnName, jdbcType=VARCHAR},
+            #{roleType, jdbcType=BIGINT},
+            #{isActive, jdbcType=VARCHAR},
+            #{remark, jdbcType=VARCHAR},
+            #{creator, jdbcType=VARCHAR},
+            #{updater, jdbcType=VARCHAR},
+            now(),
+            now(),
+        )
+    </insert>
+
+    <!--根据id查询用户详情-->
+    <select id="queryByRoleEnName" parameterType="java.lang.String" resultMap="resultMap">
+        SELECT <include refid="columns"/> FROM sys_role WHERE role_en_name =  #{roleEnName, jdbcType=VARCHAR} ORDER BY create_time desc
+    </select>
+
+    <select id="queryAllRoles" resultMap="resultMap">
+        <include refid="MYSQL.paginationStart" />
+        SELECT <include refid="columns"/> FROM sys_role
+        ORDER BY create_time desc
+        <include refid="MYSQL.paginationEnd" />
+    </select>
+</mapper>
