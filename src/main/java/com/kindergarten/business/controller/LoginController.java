@@ -3,6 +3,8 @@ package com.kindergarten.business.controller;
 import com.kindergarten.bootmain.base.BaseController;
 import com.kindergarten.business.model.SysUser;
 import com.kindergarten.business.service.SysUserService;
+import com.kindergarten.common.ResponseDto;
+import com.kindergarten.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -10,6 +12,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +31,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "")
 public class LoginController extends BaseController{
 
+    private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @Autowired
     private SysUserService sysUserService;
 
@@ -39,21 +45,23 @@ public class LoginController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "login")
-    public ResponseEntity login(@RequestParam String userName, @RequestParam String password,
+    public ResponseDto login(@RequestParam String userName, @RequestParam String password,
            @RequestParam(defaultValue = "false") boolean rememberMe){
+        ResponseDto responseDto = new ResponseDto();
         Subject currentUser  = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
         token.setRememberMe(rememberMe);
         try{
             currentUser.login(token);
+            responseDto.setMessage("登录成功");
         }catch (UnknownAccountException uae){
-            return badRequest(HttpStatus.BAD_REQUEST).put("message", "用户名不存在").build();
+            responseDto.setErrorMessage("用户名不存在");
         }catch (IncorrectCredentialsException ice){
-            return badRequest(HttpStatus.BAD_REQUEST).put("message", "密码不正确").build();
+            responseDto.setErrorMessage("密码不正确");
         }catch (AuthenticationException ae){
-            return badRequest(HttpStatus.BAD_REQUEST).put("message", "用户名或密码不正确").build();
+            responseDto.setErrorMessage("用户名或密码不正确");
         }
-        return ok().put("message", "登录成功").build();
+        return responseDto;
     }
 
     /**
@@ -62,9 +70,17 @@ public class LoginController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "logout")
-    public ResponseEntity logout(){
-        SecurityUtils.getSubject().logout();
-        return ok().put("message", "安全退出").build();
+    public ResponseDto logout(){
+        ResponseDto responseDto = new ResponseDto();
+        try{
+            SecurityUtils.getSubject().logout();
+            responseDto.setCode(HttpStatus.OK);
+            responseDto.setMessage("安全退出");
+        }catch (Exception e){
+            logger.error("退出异常");
+            responseDto.setErrorMessage("退出异常");
+        }
+        return responseDto;
     }
 
     /**

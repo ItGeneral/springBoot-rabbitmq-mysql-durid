@@ -2,6 +2,7 @@ package com.kindergarten.bootmain.listener;
 
 import com.kindergarten.business.model.SysUser;
 import com.kindergarten.business.service.SysUserService;
+import com.kindergarten.utils.MD5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

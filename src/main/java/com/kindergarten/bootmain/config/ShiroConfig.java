@@ -40,14 +40,14 @@ public class ShiroConfig {
      * 防止密码在数据库里明码保存，当然在登陆认证的时候，
      * 这个类也负责对form里输入的密码进行编码。
      */
-    @Bean(name = "hashedCredentialsMatcher")
+   /* @Bean(name = "hashedCredentialsMatcher")
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
         credentialsMatcher.setHashAlgorithmName("MD5");
         credentialsMatcher.setHashIterations(2);
         credentialsMatcher.setStoredCredentialsHexEncoded(true);
         return credentialsMatcher;
-    }
+    }*/
 
     /**ShiroRealm，这是个自定义的认证类，继承自AuthorizingRealm，
      * 负责用户的认证和权限的处理，可以参考JdbcRealm的实现。
@@ -56,7 +56,7 @@ public class ShiroConfig {
     @DependsOn("lifecycleBeanPostProcessor")
     public MyShiroRealm shiroRealm() {
         MyShiroRealm realm = new MyShiroRealm();
-        realm.setCredentialsMatcher(hashedCredentialsMatcher());
+        //realm.setCredentialsMatcher(hashedCredentialsMatcher());
         return realm;
     }
 
@@ -97,11 +97,10 @@ public class ShiroConfig {
         Map<String, Filter> filters = new LinkedHashMap<>();
         LogoutFilter logoutFilter = new LogoutFilter();
         logoutFilter.setRedirectUrl("/login");
-        //filters.put("logout",null);
         shiroFilterFactoryBean.setFilters(filters);
 
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
-        filterChainDefinitionManager.put("/logout", "logout");
+        //filterChainDefinitionManager.put("/logout", "logout");
         //用户为ROLE_USER 角色可以访问。由用户角色控制用户行为。
         filterChainDefinitionManager.put("/user/**", "authc,roles[ROLE_USER]");
         filterChainDefinitionManager.put("/events/**", "authc,roles[ROLE_ADMIN]");
