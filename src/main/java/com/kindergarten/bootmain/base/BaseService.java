@@ -1,10 +1,13 @@
 package com.kindergarten.bootmain.base;
 
-import com.kindergarten.business.model.SysUser;
-import com.kindergarten.common.BaseQueryDto;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 
 /**
  * Created on 2016/11/4.
@@ -12,59 +15,50 @@ import org.springframework.stereotype.Service;
  * @description
  */
 @Service
-public class BaseService<T> {
+public abstract class BaseService<T> {
 
     @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
+    private BaseDao baseDao;
 
-    /**
-     * 新增
-     * @param statementId
-     * @param params
-     * @return
-     */
-    public int insert(String statementId, Object params){
-        return sqlSessionTemplate.insert(statementId, params);
+    protected BaseDao dao;
+
+    private String namespace;
+
+    public BaseService() {
+        // 找到直接继承BaseService的类获取泛型
+        Class targetClazz = getClass();
+        while (true) {
+            if (targetClazz.getSuperclass().equals(BaseService.class)) {
+                break;
+            }
+            targetClazz = targetClazz.getSuperclass();
+        }
+
+        Class<T> clazz = (Class<T>) ((ParameterizedType) targetClazz.getGenericSuperclass()).getActualTypeArguments()[0];
+        namespace = clazz.getSimpleName();
+
+        // 动态代理dao，使用dao不在需要sqlId
+        Enhancer e = new Enhancer();
+        e.setSuperclass(BaseDao.class);
+        e.setCallback(new MethodInterceptor() {
+            @Override
+            public Object intercept(Object obj, Method method, Object[] args,
+                                    MethodProxy proxy) throws Throwable {
+                Object retValFromSuper = null;
+                try {
+                    args[0] = sqlId((String) args[0]);
+                    retValFromSuper = method.invoke(baseDao, args);
+                } catch (Throwable t) {
+                    throw t.fillInStackTrace();
+                }
+                return retValFromSuper;
+            }
+        });
+        dao = (BaseDao) e.create();
     }
 
-    /**
-     * 删除
-     * @param statementId
-     * @param params
-     * @return
-     */
-    public int delete(String statementId, Object params){
-        return sqlSessionTemplate.delete(statementId, params);
-    }
-
-    /**
-     * 更新
-     * @param statementId
-     * @param params
-     * @return
-     */
-    public int update(String statementId, Object params){
-        return sqlSessionTemplate.update(statementId, params);
-    }
-
-    /**
-     * 查询单条数据
-     * @param statementId
-     * @param params
-     * @return
-     */
-    public T selectOne(String statementId, Object params){
-        return sqlSessionTemplate.selectOne(statementId, params);
-    }
-
-    /**
-     * 查询多条数据
-     * @param statementId
-     * @param params
-     * @return
-     */
-    public Object selectList(String statementId, BaseQueryDto<T> params){
-        return sqlSessionTemplate.selectList(statementId, params);
+    private String sqlId(String sqlId) {
+        return new StringBuffer(namespace).append(".").append(sqlId).toString();
     }
 
 }

@@ -1,18 +1,18 @@
 package com.kindergarten.common;
 
-import org.springframework.http.HttpStatus;
+import com.kindergarten.utils.ResultStatus;
 
 /**
  * @Date Created on 2017/6/30.
  * @Author SongJiuHua.
- * @description
+ * @description 返回对象
  */
-public class ResponseDto<T> {
+public class ResponseEntity<T> {
 
     /** 返回信息 */
     private String message;
     /** 返回状态码 */
-    private HttpStatus code = HttpStatus.OK;
+    private ResultStatus status = ResultStatus.OK;
     /** 返回对象 */
     private T result;
 
@@ -24,12 +24,12 @@ public class ResponseDto<T> {
         this.message = message;
     }
 
-    public HttpStatus getCode() {
-        return code;
+    public ResultStatus getStatus() {
+        return status;
     }
 
-    public void setCode(HttpStatus code) {
-        this.code = code;
+    public void setStatus(ResultStatus status) {
+        this.status = status;
     }
 
     public T getResult() {
@@ -40,9 +40,9 @@ public class ResponseDto<T> {
         this.result = result;
     }
 
-    public void setErrorMessage(String message){
+    public void setErrorMessage(String message, ResultStatus status){
         this.message = message;
-        this.code = HttpStatus.INTERNAL_SERVER_ERROR;
+        this.status = status;
     }
 
 }

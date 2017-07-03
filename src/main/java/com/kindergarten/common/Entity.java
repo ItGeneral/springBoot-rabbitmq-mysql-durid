@@ -7,7 +7,7 @@ import java.util.Date;
  * @Author SongJiuHua.
  * @description
  */
-public class EntityDto {
+public class Entity {
     /** id */
     private Long id;
     /** 创建时间 */

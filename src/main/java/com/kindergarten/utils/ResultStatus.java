@@ -3,11 +3,13 @@ package com.kindergarten.utils;
 /**
  * @Date Created on 2017/6/30.
  * @Author SongJiuHua.
- * @description
+ * @description 状态码
  */
 public enum ResultStatus {
 
-    OK("200", "成功");
+    OK("200", "成功"),
+    INTERNAL_SERVER_ERROR("500", "系统服务异常"),
+    PARAMETER_EXCEPTION("601", "参数校验异常");
 
     private String code;
 

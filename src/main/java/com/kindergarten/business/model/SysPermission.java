@@ -1,13 +1,13 @@
 package com.kindergarten.business.model;
 
-import com.kindergarten.common.EntityDto;
+import com.kindergarten.common.Entity;
 
 /**
  * @Date Created on 2017/6/26.
  * @Author SongJiuHua.
  * @description
  */
-public class SysPermission extends EntityDto {
+public class SysPermission extends Entity {
 
     /** 权限中文名称 */
     private String permissionCnName;

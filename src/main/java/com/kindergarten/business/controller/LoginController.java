@@ -3,8 +3,8 @@ package com.kindergarten.business.controller;
 import com.kindergarten.bootmain.base.BaseController;
 import com.kindergarten.business.model.SysUser;
 import com.kindergarten.business.service.SysUserService;
-import com.kindergarten.common.ResponseDto;
-import com.kindergarten.utils.MD5Util;
+import com.kindergarten.common.ResponseEntity;
+import com.kindergarten.utils.ResultStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -15,8 +15,6 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,23 +43,26 @@ public class LoginController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "login")
-    public ResponseDto login(@RequestParam String userName, @RequestParam String password,
-           @RequestParam(defaultValue = "false") boolean rememberMe){
-        ResponseDto responseDto = new ResponseDto();
+    public ResponseEntity login(@RequestParam String userName, @RequestParam String password,
+                                @RequestParam(defaultValue = "false") boolean rememberMe){
+        ResponseEntity responseEntity = new ResponseEntity();
         Subject currentUser  = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
         token.setRememberMe(rememberMe);
         try{
             currentUser.login(token);
-            responseDto.setMessage("登录成功");
+            responseEntity.setMessage("登录成功");
         }catch (UnknownAccountException uae){
-            responseDto.setErrorMessage("用户名不存在");
+            logger.error("用户名不存在", uae);
+            responseEntity.setErrorMessage("用户名不存在", ResultStatus.PARAMETER_EXCEPTION);
         }catch (IncorrectCredentialsException ice){
-            responseDto.setErrorMessage("密码不正确");
+            logger.error("密码不正确", ice);
+            responseEntity.setErrorMessage("密码不正确", ResultStatus.PARAMETER_EXCEPTION);
         }catch (AuthenticationException ae){
-            responseDto.setErrorMessage("用户名或密码不正确");
+            logger.error("用户名或密码不正确", ae);
+            responseEntity.setErrorMessage("用户名或密码不正确", ResultStatus.PARAMETER_EXCEPTION);
         }
-        return responseDto;
+        return responseEntity;
     }
 
     /**
@@ -70,17 +71,16 @@ public class LoginController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "logout")
-    public ResponseDto logout(){
-        ResponseDto responseDto = new ResponseDto();
+    public ResponseEntity logout(){
+        ResponseEntity responseEntity = new ResponseEntity();
         try{
             SecurityUtils.getSubject().logout();
-            responseDto.setCode(HttpStatus.OK);
-            responseDto.setMessage("安全退出");
+            responseEntity.setMessage("安全退出");
         }catch (Exception e){
-            logger.error("退出异常");
-            responseDto.setErrorMessage("退出异常");
+            logger.error("退出异常", e);
+            responseEntity.setErrorMessage("退出异常", ResultStatus.INTERNAL_SERVER_ERROR);
         }
-        return responseDto;
+        return responseEntity;
     }
 
     /**
@@ -91,17 +91,22 @@ public class LoginController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "register")
     public ResponseEntity register(SysUser sysUser){
+        ResponseEntity responseEntity = new ResponseEntity();
         if (StringUtils.isEmpty(sysUser.getUserName())){
-            return badRequest(HttpStatus.BAD_REQUEST).put("message", "用户名不能为空").build();
+            responseEntity.setErrorMessage("用户名不能为空", ResultStatus.PARAMETER_EXCEPTION);
+            return responseEntity;
         }
         if(StringUtils.isEmpty(sysUser.getPassword())){
-            return badRequest(HttpStatus.BAD_REQUEST).put("message", "密码不能为空").build();
+            responseEntity.setErrorMessage("密码不能为空", ResultStatus.PARAMETER_EXCEPTION);
+            return responseEntity;
         }
         try{
             sysUserService.insertUser(sysUser);
+            responseEntity.setMessage("注册成功");
         }catch (Exception e){
-            return badRequest(HttpStatus.BAD_REQUEST).put("message", "程序异常，请稍后再试").build();
+            logger.error("注册失败", e);
+            responseEntity.setErrorMessage("注册失败，请稍后再试", ResultStatus.INTERNAL_SERVER_ERROR);
         }
-        return ok().put("message", "注册成功").build();
+        return responseEntity;
     }
 }

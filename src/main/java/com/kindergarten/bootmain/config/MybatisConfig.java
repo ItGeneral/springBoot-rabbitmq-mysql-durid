@@ -1,5 +1,6 @@
 package com.kindergarten.bootmain.config;
 
+import com.kindergarten.bootmain.base.BaseDao;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -64,5 +65,12 @@ public class MybatisConfig implements TransactionManagementConfigurer{
     @Bean(name = "transactionManager")
     public PlatformTransactionManager annotationDrivenTransactionManager() {
         return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean(name = "baseDao")
+    public BaseDao baseDaoBean() {
+        BaseDao baseDao = new BaseDao();
+        baseDao.setSqlSessionFactory(sqlSessionFactory());
+        return baseDao;
     }
 }

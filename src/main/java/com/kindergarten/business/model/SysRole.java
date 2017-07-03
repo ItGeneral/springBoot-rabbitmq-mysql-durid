@@ -1,6 +1,6 @@
 package com.kindergarten.business.model;
 
-import com.kindergarten.common.EntityDto;
+import com.kindergarten.common.Entity;
 
 
 /**
@@ -8,7 +8,7 @@ import com.kindergarten.common.EntityDto;
  * @Author SongJiuHua.
  * @description
  */
-public class SysRole extends EntityDto {
+public class SysRole extends Entity {
 
     /** 角色中文名称 */
     private String roleCnName;

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2015-3-13
  */
 @XmlRootElement
-public class BaseQueryDto<T> implements Serializable {
+public class BaseQueryEntity<T> implements Serializable {
 	
 	private static final long serialVersionUID = -689667730283333557L;
 
@@ -23,17 +23,17 @@ public class BaseQueryDto<T> implements Serializable {
 	
 	private String queryKey;
 	
-	public BaseQueryDto() {
+	public BaseQueryEntity() {
 		
 	}
 	
-	public BaseQueryDto(T condition) {
+	public BaseQueryEntity(T condition) {
 		super();
 		this.pagination=new Pagination(0,50000,null,null);
 		this.condition = condition;
 	}
 
-	public BaseQueryDto(Pagination pagination, T condition) {
+	public BaseQueryEntity(Pagination pagination, T condition) {
 		this.pagination = pagination;
 		this.condition = condition;
 	}
