@@ -4,6 +4,7 @@ import com.kindergarten.bootmain.base.BaseController;
 import com.kindergarten.business.model.SysUser;
 import com.kindergarten.business.service.SysUserService;
 import com.kindergarten.common.ResponseEntity;
+import com.kindergarten.utils.MD5Util;
 import com.kindergarten.utils.ResultStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,7 +49,7 @@ public class LoginController extends BaseController{
                                 @RequestParam(defaultValue = "false") boolean rememberMe){
         ResponseEntity responseEntity = new ResponseEntity();
         Subject currentUser  = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(userName, MD5Util.getEncryptedString(password));
         token.setRememberMe(rememberMe);
         try{
             currentUser.login(token);
@@ -101,6 +103,7 @@ public class LoginController extends BaseController{
             return responseEntity;
         }
         try{
+            sysUser.setPassword(MD5Util.getEncryptedString(sysUser.getPassword()));
             sysUserService.insertUser(sysUser);
             responseEntity.setMessage("注册成功");
         }catch (Exception e){
