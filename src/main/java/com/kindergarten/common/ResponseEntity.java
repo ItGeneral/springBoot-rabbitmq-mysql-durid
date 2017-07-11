@@ -12,7 +12,7 @@ public class ResponseEntity<T> {
     /** 返回信息 */
     private String message;
     /** 返回状态码 */
-    private ResultStatus status = ResultStatus.OK;
+    private String status = ResultStatus.OK.getCode();
     /** 返回对象 */
     private T result;
 
@@ -24,11 +24,11 @@ public class ResponseEntity<T> {
         this.message = message;
     }
 
-    public ResultStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(ResultStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -40,7 +40,7 @@ public class ResponseEntity<T> {
         this.result = result;
     }
 
-    public void setErrorMessage(String message, ResultStatus status){
+    public void setErrorMessage(String message, String status){
         this.message = message;
         this.status = status;
     }

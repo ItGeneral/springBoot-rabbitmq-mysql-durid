@@ -54,13 +54,13 @@ public class LoginController extends BaseController{
             responseEntity.setMessage("登录成功");
         }catch (UnknownAccountException uae){
             logger.error("用户名不存在", uae);
-            responseEntity.setErrorMessage("用户名不存在", ResultStatus.PARAMETER_EXCEPTION);
+            responseEntity.setErrorMessage("用户名不存在", ResultStatus.PARAMETER_EXCEPTION.getCode());
         }catch (IncorrectCredentialsException ice){
             logger.error("密码不正确", ice);
-            responseEntity.setErrorMessage("密码不正确", ResultStatus.PARAMETER_EXCEPTION);
+            responseEntity.setErrorMessage("密码不正确", ResultStatus.PARAMETER_EXCEPTION.getCode());
         }catch (AuthenticationException ae){
             logger.error("用户名或密码不正确", ae);
-            responseEntity.setErrorMessage("用户名或密码不正确", ResultStatus.PARAMETER_EXCEPTION);
+            responseEntity.setErrorMessage("用户名或密码不正确", ResultStatus.PARAMETER_EXCEPTION.getCode());
         }
         return responseEntity;
     }
@@ -78,7 +78,7 @@ public class LoginController extends BaseController{
             responseEntity.setMessage("安全退出");
         }catch (Exception e){
             logger.error("退出异常", e);
-            responseEntity.setErrorMessage("退出异常", ResultStatus.INTERNAL_SERVER_ERROR);
+            responseEntity.setErrorMessage("退出异常", ResultStatus.INTERNAL_SERVER_ERROR.getCode());
         }
         return responseEntity;
     }
@@ -93,11 +93,11 @@ public class LoginController extends BaseController{
     public ResponseEntity register(SysUser sysUser){
         ResponseEntity responseEntity = new ResponseEntity();
         if (StringUtils.isEmpty(sysUser.getUserName())){
-            responseEntity.setErrorMessage("用户名不能为空", ResultStatus.PARAMETER_EXCEPTION);
+            responseEntity.setErrorMessage("用户名不能为空", ResultStatus.PARAMETER_EXCEPTION.getCode());
             return responseEntity;
         }
         if(StringUtils.isEmpty(sysUser.getPassword())){
-            responseEntity.setErrorMessage("密码不能为空", ResultStatus.PARAMETER_EXCEPTION);
+            responseEntity.setErrorMessage("密码不能为空", ResultStatus.PARAMETER_EXCEPTION.getCode());
             return responseEntity;
         }
         try{
@@ -105,7 +105,7 @@ public class LoginController extends BaseController{
             responseEntity.setMessage("注册成功");
         }catch (Exception e){
             logger.error("注册失败", e);
-            responseEntity.setErrorMessage("注册失败，请稍后再试", ResultStatus.INTERNAL_SERVER_ERROR);
+            responseEntity.setErrorMessage("注册失败，请稍后再试", ResultStatus.INTERNAL_SERVER_ERROR.getCode());
         }
         return responseEntity;
     }
