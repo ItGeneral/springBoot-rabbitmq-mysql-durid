@@ -33,7 +33,7 @@
             #{emailAddress, jdbcType=VARCHAR},
             #{age, jdbcType=BIGINT},
             #{graduatedSchool, jdbcType=VARCHAR},
-            #{status, jdbcType=BIGINT},
+            1,
             now(),
             now()
         )

@@ -9,6 +9,8 @@ import java.util.Date;
  * @description
  */
 public class SysUser implements Serializable{
+
+    private static final long serialVersionUID = 8834064209490941784L;
     /** id */
     private Long id;
     /** 用户名 */

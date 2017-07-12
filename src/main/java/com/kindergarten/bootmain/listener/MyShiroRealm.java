@@ -79,7 +79,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             //设置用户session
             Session session = SecurityUtils.getSubject().getSession();
             session.setAttribute("sysUser", sysUser);
-            return new SimpleAuthenticationInfo(sysUser.getUserName(), MD5Util.getEncryptedString(sysUser.getPassword()).toCharArray(), getName());
+            return new SimpleAuthenticationInfo(sysUser.getUserName(), sysUser.getPassword().toCharArray(), getName());
         }
         return null;
     }
