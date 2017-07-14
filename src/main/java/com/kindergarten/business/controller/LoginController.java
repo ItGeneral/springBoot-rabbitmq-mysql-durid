@@ -94,7 +94,7 @@ public class LoginController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ResponseEntity register(SysUser sysUser){
+    public ResponseEntity register(@RequestBody SysUser sysUser){
         ResponseEntity responseEntity = new ResponseEntity();
         if (StringUtils.isEmpty(sysUser.getUserName())){
             responseEntity.setErrorMessage("用户名不能为空", ResultStatus.PARAMETER_EXCEPTION.getCode());
