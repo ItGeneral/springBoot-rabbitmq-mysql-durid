@@ -75,3 +75,18 @@ CREATE TABLE sys_role_permission(
   PRIMARY KEY (id),
   INDEX sys_role_permission_role_name_permission_name(role_en_name, permission_en_name)
 )COMMENT='角色权限关联表' DEFAULT CHARSET=utf8 COLLATE='utf8_general_ci' ENGINE=InnoDB AUTO_INCREMENT=1;
+
+/** ADD BY SONGJIUHUA ON 2017/07/14 */
+DROP TABLE IF EXISTS sys_base_info;
+CREATE TABLE sys_base_info(
+  id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  school_introduction TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '学校简介',
+  school_culture TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '校园文化',
+  school_teacher_info TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '师资介绍',
+  school_contact_name VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '学校负责人姓名',
+  school_contact_phone VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '学校联系人电话',
+  school_address VARCHAR(512) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '学校所在地址',
+  create_time TIMESTAMP NULL DEFAULT NULL COMMENT '创建时间',
+  update_time TIMESTAMP NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (id)
+)COMMENT='学校基本信息表' DEFAULT CHARSET=utf8 COLLATE='utf8_general_ci' ENGINE=InnoDB AUTO_INCREMENT=1;

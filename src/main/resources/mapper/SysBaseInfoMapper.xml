@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SysBaseInfo">
+
+    <resultMap id="resultMap" type="com.kindergarten.business.model.SysBaseInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="school_introduction" property="schoolIntroduction" jdbcType="VARCHAR"/>
+        <result column="school_culture" property="schoolCulture" jdbcType="VARCHAR"/>
+        <result column="school_teacher_info" property="schoolTeacherInfo" jdbcType="VARCHAR"/>
+        <result column="school_contact_name" property="schoolContactName" jdbcType="VARCHAR"/>
+        <result column="school_contact_phone" property="schoolContactPhone" jdbcType="VARCHAR"/>
+        <result column="school_address" property="schoolAddress" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="columns">
+        id, school_introduction, school_culture, school_teacher_info, school_contact_name, school_contact_phone, school_address, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.kindergarten.business.model.SysBaseInfo">
+        INSERT INTO sys_base_info
+        (<include refid="columns"/>)
+        VALUES
+        (
+            #{id, jdbcType=BIGINT},
+            #{schoolIntroduction, jdbcType=VARCHAR},
+            #{schoolCulture, jdbcType=VARCHAR},
+            #{schoolTeacherInfo, jdbcType=VARCHAR},
+            #{schoolContactName, jdbcType=VARCHAR},
+            #{schoolContactPhone, jdbcType=VARCHAR},
+            #{schoolAddress, jdbcType=VARCHAR}
+            now(),
+            now()
+        )
+    </insert>
+
+    <update id="updateById" parameterType="com.kindergarten.business.model.SysBaseInfo">
+        UPDATE sys_base_info
+        <set>
+            <if test="schoolIntroduction != null and schoolIntroduction != ''">
+                school_introduction = #{school_introduction},
+            </if>
+            <if test="schoolCulture != null and schoolCulture != ''">
+                school_culture = #{schoolCulture},
+            </if>
+            <if test="schoolTeacherInfo != null and schoolTeacherInfo != ''">
+                school_teacher_info = #{schoolTeacherInfo},
+            </if>
+            <if test="schoolContactName != null and schoolContactName != ''">
+                school_contact_name = #{schoolContactName},
+            </if>
+            <if test="schoolContactPhone != null and schoolContactPhone != ''">
+                school_contact_phone = #{schoolContactPhone},
+            </if>
+            <if test="schoolAddress != null and schoolAddress != ''">
+                school_address = #{schoolAddress},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="query" parameterType="com.kindergarten.common.BaseQueryEntity" resultMap="resultMap">
+        <include refid="MYSQL.paginationStart"/>
+        SELECT <include refid="columns"/> FROM sys_base_info
+        <trim prefix="WHERE" prefixOverrides="AND">
+          <if test="id != null">
+              AND id = #{id}
+          </if>
+        </trim>
+        ORDER BY create_time DESC
+        <include refid="MYSQL.paginationEnd"/>
+    </select>
+
+    <select id="count" parameterType="com.kindergarten.business.model.SysBaseInfo" resultType="java.lang.Integer">
+        SELECT count(1) FROM sys_base_info
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+        </trim>
+    </select>
+
+</mapper>

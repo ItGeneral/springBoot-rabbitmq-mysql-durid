@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2015-3-13
  */
 @XmlRootElement
-public class BaseQueryEntity<T> implements Serializable {
+public class BaseQueryEntity<T> implements Serializable, Dto {
 	
 	private static final long serialVersionUID = -689667730283333557L;
 
@@ -79,4 +79,9 @@ public class BaseQueryEntity<T> implements Serializable {
 		return pagination.getSord();
 	}
 
+	@Override
+	@JsonIgnore
+	public Long getId() {
+		return null;
+	}
 }
