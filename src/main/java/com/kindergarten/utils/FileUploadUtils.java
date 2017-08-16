@@ -41,6 +41,11 @@ public class FileUploadUtils {
 
     }
 
+    /**
+     * 上传文件
+     * @param request
+     * @param response
+     */
     public static void upLoadFile(HttpServletRequest request, HttpServletResponse response){
         //文件保存目录
         String fileSavePath = properties.getProperty("file.save.path");
