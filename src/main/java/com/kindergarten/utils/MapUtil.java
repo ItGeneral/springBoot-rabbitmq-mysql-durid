@@ -3,10 +3,15 @@ package com.kindergarten.utils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @Date Created on 2017/8/16.
@@ -69,6 +74,37 @@ public class MapUtil {
             e.printStackTrace();
         }
         return javaBean;
+    }
+
+    /**
+     * JavaBean转TreeMap
+     * @param javaBean
+     * @param <T>
+     * @return
+     */
+    public static <T> TreeMap<String, Object> javaBeanToTreeMap(T javaBean){
+        TreeMap<String, Object> map = new TreeMap<String, Object>();
+        Field[] fields = javaBean.getClass().getDeclaredFields();
+        for (Field field : fields){
+            try {
+                if (field.getName().equals("serialVersionUID")){
+                    continue;
+                }
+                PropertyDescriptor pd = new PropertyDescriptor(field.getName(), javaBean.getClass());
+                //调用getter方法获取数据
+                Object value = pd.getReadMethod().invoke(javaBean);
+                if (value != null && !value.equals("")){
+                    map.put(field.getName(), value);
+                }
+            } catch (IntrospectionException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return map;
     }
 
 }
