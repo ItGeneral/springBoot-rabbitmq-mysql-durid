@@ -31,7 +31,7 @@ public class MapUtil {
                 BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(javaBean);
                 if (entry.getValue() instanceof Map){
                     //获取字段的类型
-                    Type type = null;
+                    Type type ;
                     if (javaBean instanceof Class){
                         type = ((Class) javaBean).getDeclaredField(entry.getKey()).getGenericType();
                     }else{
