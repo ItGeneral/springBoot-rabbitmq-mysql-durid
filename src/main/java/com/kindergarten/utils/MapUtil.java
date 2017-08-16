@@ -21,6 +21,7 @@ import java.util.TreeMap;
 public class MapUtil {
 
     /**
+     * BeanWrapper是spring底层javaBeans的核心接口
      * 如果javaBean中的属性含有复杂类型（javaBean类型、List、Map），则继续遍历该类型的值，直到属性类型为基础类型为止
      * @param javaBean java对象
      * @param map Map集合
@@ -77,6 +78,9 @@ public class MapUtil {
     }
 
     /**
+     * PropertyDescriptor 属性描述器 通过导出属性的存取方法来描述一个属性
+     * getReadMethod().invoke() 调用属性的getter方法 获取值
+     * getWriteMethod().invoke() 调用属性的setter方法 写入值
      * JavaBean转TreeMap
      * @param javaBean
      * @param <T>
